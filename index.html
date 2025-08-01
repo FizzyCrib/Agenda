@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Coffee King - Agenda de Ventas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #D2B48C 0%, #8B4513 100%);
+            min-height: 100vh;
+            padding: 30px;
+            font-size: 18px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.4em;
+            opacity: 0.9;
+        }
+        
+        .date-navigation {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8f9fa;
+            padding: 30px 40px;
+            border-bottom: 3px solid #dee2e6;
+        }
+        
+        .nav-btn {
+            background: #8B4513;
+            color: white;
+            border: none;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            font-size: 32px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 80px;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+        }
+        
+        .nav-btn:hover {
+            background: #A0522D;
+            transform: scale(1.1);
+        }
+        
+        .date-display {
+            text-align: center;
+            flex: 1;
+            margin: 0 30px;
+        }
+        
+        .date-display h2 {
+            color: #8B4513;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .date-display p {
+            color: #666;
+            font-size: 1.6em;
+        }
+        
+        .main-content {
+            padding: 50px;
+        }
+        
+        .sales-section {
+            margin-bottom: 50px;
+        }
+        
+        .add-sale-form {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .add-sale-form h3 {
+            margin-bottom: 30px;
+            color: #8B4513;
+            font-size: 1.8em;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: end;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input {
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            min-height: 44px;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #8B4513;
+        }
+        
+        .btn-add {
+            background: #8B4513;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-height: 60px;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+        }
+        
+        .btn-add:hover {
+            background: #A0522D;
+            transform: translateY(-2px);
+        }
+        
+        .sales-list {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .sales-header {
+            background: #8B4513;
+            color: white;
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 3fr 1fr 1fr 80px;
+            gap: 30px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .sale-item {
+            padding: 25px;
+            border-bottom: 2px solid #eee;
+            display: grid;
+            grid-template-columns: 3fr 1fr 1fr 80px;
+            gap: 30px;
+            align-items: center;
+            transition: background-color 0.3s ease;
+            font-size: 1.1em;
+        }
+        
+        .sale-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .sale-item:last-child {
+            border-bottom: none;
+        }
+        
+        .delete-sale {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .delete-sale:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+        
+        .total-section {
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            margin-top: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(139, 69, 19, 0.4);
+        }
+        
+        .total-section h3 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        
+        .total-amount {
+            font-size: 4.5em;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 80px 30px;
+            color: #666;
+        }
+        
+        .empty-state h3 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #8B4513;
+        }
+        
+        .empty-state p {
+            font-size: 1.2em;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .stat-card h4 {
+            font-size: 2.2em;
+            margin-bottom: 8px;
+        }
+        
+        .stat-card p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+                font-size: 16px;
+            }
+            
+            .main-content {
+                padding: 30px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.8em;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .sales-header, .sale-item {
+                grid-template-columns: 2fr 1fr 70px;
+                font-size: 16px;
+                gap: 15px;
+                padding: 20px;
+            }
+            
+            .sales-header span:nth-child(2),
+            .sale-item span:nth-child(2) {
+                display: none;
+            }
+            
+            .date-navigation {
+                padding: 20px;
+            }
+            
+            .nav-btn {
+                width: 70px;
+                height: 70px;
+                font-size: 28px;
+            }
+            
+            .date-display h2 {
+                font-size: 2em;
+            }
+            
+            .date-display p {
+                font-size: 1.3em;
+            }
+            
+            .total-amount {
+                font-size: 3.5em;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        
+        .currency {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>☕ Coffee King</h1>
+            <p>Agenda de Ventas Diarias</p>
+        </div>
+        
+        <div class="date-navigation">
+            <button class="nav-btn" onclick="changeDay(-1)" title="Día anterior">‹</button>
+            <div class="date-display">
+                <h2 id="dayName">Lunes</h2>
+                <p id="fullDate">1 de Enero de 2025</p>
+            </div>
+            <button class="nav-btn" onclick="changeDay(1)" title="Día siguiente">›</button>
+        </div>
+        
+        <div class="main-content">
+            <div class="sales-section">
+                <div class="add-sale-form">
+                    <h3 style="margin-bottom: 20px; color: #8B4513;">➕ Agregar Venta</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>¿Qué se vendió?</label>
+                            <input type="text" id="productName" placeholder="Ej: Café Americano Grande">
+                        </div>
+                        <div class="form-group">
+                            <label>Cantidad</label>
+                            <input type="number" id="quantity" placeholder="1" min="1" value="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Precio</label>
+                            <input type="number" id="price" placeholder="25.00" step="0.01" min="0">
+                        </div>
+                    </div>
+                    <button class="btn-add" onclick="addSale()">💰 Agregar Venta</button>
+                </div>
+                
+                <div class="sales-list">
+                    <div class="sales-header">
+                        <span>Producto</span>
+                        <span>Cantidad</span>
+                        <span>Total</span>
+                        <span></span>
+                    </div>
+                    <div id="salesContainer">
+                        <div class="empty-state">
+                            <h3>No hay ventas registradas</h3>
+                            <p>Agrega la primera venta del día usando el formulario de arriba</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="total-section">
+                <h3>💰 Total del Día</h3>
+                <div class="total-amount">$<span id="totalAmount">0.00</span></div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4 id="totalSales">0</h4>
+                        <p>Ventas</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4 id="totalItems">0</h4>
+                        <p>Productos</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>$<span id="avgSale">0.00</span></h4>
+                        <p>Promedio</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let currentDate = new Date();
+        let salesData = loadSalesData() || {};
+        
+        // Nombres de días y meses en español
+        const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+                           'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        
+        // Inicializar la aplicación
+        function init() {
+            updateDateDisplay();
+            loadDaySales();
+        }
+        
+        // Actualizar la visualización de la fecha
+        function updateDateDisplay() {
+            const dayName = dayNames[currentDate.getDay()];
+            const day = currentDate.getDate();
+            const month = monthNames[currentDate.getMonth()];
+            const year = currentDate.getFullYear();
+            
+            document.getElementById('dayName').textContent = dayName;
+            document.getElementById('fullDate').textContent = `${day} de ${month} de ${year}`;
+        }
+        
+        // Cambiar día
+        function changeDay(direction) {
+            const newDate = new Date(currentDate);
+            newDate.setDate(currentDate.getDate() + direction);
+            currentDate = newDate;
+            
+            updateDateDisplay();
+            loadDaySales();
+        }
+        
+        // Obtener clave del día actual
+        function getCurrentDateKey() {
+            return `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+        }
+        
+        // Agregar venta
+        function addSale() {
+            const productName = document.getElementById('productName').value.trim();
+            const quantity = parseInt(document.getElementById('quantity').value) || 1;
+            const price = parseFloat(document.getElementById('price').value) || 0;
+            
+            if (!productName) {
+                alert('Por favor ingresa el nombre del producto');
+                return;
+            }
+            
+            if (price <= 0) {
+                alert('Por favor ingresa un precio válido');
+                return;
+            }
+            
+            const dateKey = getCurrentDateKey();
+            const sale = {
+                id: Date.now(),
+                product: productName,
+                quantity: quantity,
+                price: price,
+                total: quantity * price,
+                timestamp: new Date().toLocaleTimeString()
+            };
+            
+            if (!salesData[dateKey]) {
+                salesData[dateKey] = [];
+            }
+            
+            salesData[dateKey].push(sale);
+            saveSalesData();
+            
+            // Limpiar formulario
+            document.getElementById('productName').value = '';
+            document.getElementById('quantity').value = '1';
+            document.getElementById('price').value = '';
+            
+            loadDaySales();
+        }
+        
+        // Cargar ventas del día
+        function loadDaySales() {
+            const dateKey = getCurrentDateKey();
+            const daySales = salesData[dateKey] || [];
+            const container = document.getElementById('salesContainer');
+            
+            if (daySales.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No hay ventas registradas</h3>
+                        <p>Agrega la primera venta del día usando el formulario de arriba</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = daySales.map(sale => `
+                    <div class="sale-item">
+                        <span><strong>${sale.product}</strong><br><small>${sale.timestamp}</small></span>
+                        <span>${sale.quantity}</span>
+                        <span class="currency">$${sale.total.toFixed(2)}</span>
+                        <button class="delete-sale" onclick="deleteSale(${sale.id})" title="Eliminar venta">×</button>
+                    </div>
+                `).join('');
+            }
+            
+            updateTotals(daySales);
+        }
+        
+        // Eliminar venta
+        function deleteSale(saleId) {
+            if (!confirm('¿Estás seguro de eliminar esta venta?')) {
+                return;
+            }
+            
+            const dateKey = getCurrentDateKey();
+            salesData[dateKey] = salesData[dateKey].filter(sale => sale.id !== saleId);
+            
+            if (salesData[dateKey].length === 0) {
+                delete salesData[dateKey];
+            }
+            
+            saveSalesData();
+            loadDaySales();
+        }
+        
+        // Actualizar totales
+        function updateTotals(sales) {
+            const totalAmount = sales.reduce((sum, sale) => sum + sale.total, 0);
+            const totalSales = sales.length;
+            const totalItems = sales.reduce((sum, sale) => sum + sale.quantity, 0);
+            const avgSale = totalSales > 0 ? totalAmount / totalSales : 0;
+            
+            document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
+            document.getElementById('totalSales').textContent = totalSales;
+            document.getElementById('totalItems').textContent = totalItems;
+            document.getElementById('avgSale').textContent = avgSale.toFixed(2);
+        }
+        
+        // Guardar datos
+        function saveSalesData() {
+            try {
+                localStorage.setItem('coffee_king_sales', JSON.stringify(salesData));
+            } catch(e) {
+                document.cookie = `coffee_king_sales=${encodeURIComponent(JSON.stringify(salesData))};expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/`;
+            }
+        }
+        
+        // Cargar datos
+        function loadSalesData() {
+            try {
+                const saved = localStorage.getItem('coffee_king_sales');
+                return saved ? JSON.parse(saved) : null;
+            } catch(e) {
+                const cookies = document.cookie.split(';');
+                for(let cookie of cookies) {
+                    const [name, value] = cookie.trim().split('=');
+                    if(name === 'coffee_king_sales') {
+                        try {
+                            return JSON.parse(decodeURIComponent(value));
+                        } catch(e) {
+                            return null;
+                        }
+                    }
+                }
+                return null;
+            }
+        }
+        
+        // Manejar Enter en los campos de input
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = ['productName', 'quantity', 'price'];
+            inputs.forEach(id => {
+                document.getElementById(id).addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        addSale();
+                    }
+                });
+            });
+        });
+        
+        // Inicializar cuando carga la página
+        init();
+    </script>
+</body>
+</html>
