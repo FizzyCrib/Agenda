@@ -536,6 +536,22 @@
             background: #2980b9;
         }
 
+        .btn-backup {
+            background: #9b59b6;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-backup:hover {
+            background: #8e44ad;
+        }
+
         /* Modal styles */
         .modal {
             display: none;
@@ -572,6 +588,21 @@
         
         .close:hover {
             color: #000;
+        }
+
+        .storage-info {
+            background: #e7f3ff;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .storage-info p {
+            margin: 0;
+            color: #2c3e50;
+            font-weight: bold;
         }
         
         @media (max-width: 768px) {
@@ -678,6 +709,9 @@
         <div class="header">
             <h1>☕ Coffee King</h1>
             <p>Agenda de Ventas Diarias</p>
+            <div class="storage-info">
+                <p>💾 Los datos se guardan automáticamente en tu navegador</p>
+            </div>
         </div>
         
         <div class="date-navigation">
@@ -770,6 +804,13 @@
                     <button id="closeDayBtn" class="btn-close-day" onclick="closeDay()">🔒 Cerrar Día</button>
                     <button id="reopenDayBtn" class="btn-reopen-day" onclick="reopenDay()" style="display: none;">🔓 Reabrir Día</button>
                     <button class="btn-monthly-report" onclick="showMonthlyReport()">📊 Reporte Mensual</button>
+                    <button class="btn-backup" onclick="downloadBackup()">💾 Descargar Respaldo</button>
+                </div>
+
+                <!-- File input for restore (hidden) -->
+                <input type="file" id="fileInput" style="display: none;" accept=".json" onchange="restoreBackup(event)">
+                <div style="text-align: center; margin-top: 15px;">
+                    <button class="btn-backup" onclick="document.getElementById('fileInput').click()">📁 Restaurar Respaldo</button>
                 </div>
             </div>
         </div>
@@ -796,32 +837,107 @@
                            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         const dayNamesShort = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
         
-        // Funciones para guardar y cargar datos
-        function saveData() {
+        // Funciones de almacenamiento local
+        function saveToStorage() {
             try {
-                // Guardamos tanto las ventas como los días cerrados en variables globales
-                // (En este entorno, los datos se mantienen durante la sesión)
-                console.log('Datos guardados:', { salesData, closedDays });
+                localStorage.setItem('coffeeKing_salesData', JSON.stringify(salesData));
+                localStorage.setItem('coffeeKing_closedDays', JSON.stringify(closedDays));
+                console.log('Datos guardados exitosamente');
             } catch (error) {
                 console.error('Error al guardar datos:', error);
             }
         }
         
-        function loadData() {
+        function loadFromStorage() {
             try {
-                // En este entorno, los datos se mantienen en las variables globales
-                // durante la sesión actual
-                console.log('Datos cargados:', { salesData, closedDays });
+                const savedSalesData = localStorage.getItem('coffeeKing_salesData');
+                const savedClosedDays = localStorage.getItem('coffeeKing_closedDays');
+                
+                if (savedSalesData) {
+                    salesData = JSON.parse(savedSalesData);
+                }
+                
+                if (savedClosedDays) {
+                    closedDays = JSON.parse(savedClosedDays);
+                }
+                
+                console.log('Datos cargados exitosamente');
             } catch (error) {
                 console.error('Error al cargar datos:', error);
                 salesData = {};
                 closedDays = {};
             }
         }
+
+        // Función para descargar respaldo
+        function downloadBackup() {
+            const backupData = {
+                salesData: salesData,
+                closedDays: closedDays,
+                exportDate: new Date().toISOString(),
+                version: '1.0'
+            };
+            
+            const dataStr = JSON.stringify(backupData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `coffee-king-backup-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            alert('Respaldo descargado exitosamente');
+        }
+
+        // Función para restaurar respaldo
+        function restoreBackup(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (!confirm('¿Estás seguro de restaurar el respaldo? Esto reemplazará todos los datos actuales.')) {
+                event.target.value = '';
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const backupData = JSON.parse(e.target.result);
+                    
+                    // Verificar estructura del respaldo
+                    if (backupData.salesData && backupData.closedDays) {
+                        salesData = backupData.salesData;
+                        closedDays = backupData.closedDays;
+                        
+                        // Guardar en localStorage
+                        saveToStorage();
+                        
+                        // Actualizar interfaz
+                        loadDaySales();
+                        updateDayStatus();
+                        generateCalendar();
+                        
+                        alert('Respaldo restaurado exitosamente');
+                    } else {
+                        alert('Archivo de respaldo inválido');
+                    }
+                } catch (error) {
+                    console.error('Error al restaurar respaldo:', error);
+                    alert('Error al leer el archivo de respaldo');
+                }
+            };
+            
+            reader.readAsText(file);
+            event.target.value = '';
+        }
         
         // Inicializar la aplicación
         function init() {
-            loadData();
+            loadFromStorage();
             updateDateDisplay();
             loadDaySales();
             updateDayStatus();
@@ -975,7 +1091,7 @@
             
             if (confirm('¿Estás seguro de cerrar este día? No podrás agregar más ventas.')) {
                 closedDays[dateKey] = true;
-                saveData();
+                saveToStorage();
                 updateDayStatus();
                 loadDaySales();
                 generateCalendar();
@@ -987,7 +1103,7 @@
             if (confirm('¿Deseas reabrir este día para poder agregar más ventas?')) {
                 const dateKey = getCurrentDateKey();
                 delete closedDays[dateKey];
-                saveData();
+                saveToStorage();
                 updateDayStatus();
                 loadDaySales();
                 generateCalendar();
@@ -1030,12 +1146,15 @@
             }
             
             salesData[dateKey].push(sale);
-            saveData();
+            saveToStorage();
             
             // Limpiar formulario
             document.getElementById('productName').value = '';
             document.getElementById('quantity').value = '1';
             document.getElementById('price').value = '';
+            
+            // Enfocar en el campo de producto para la siguiente venta
+            document.getElementById('productName').focus();
             
             loadDaySales();
             generateCalendar();
@@ -1101,15 +1220,32 @@
                 return;
             }
             
-            salesData[dateKey] = salesData[dateKey].filter(sale => sale.id !== saleId);
+            // Verificar que existe la data para el día
+            if (!salesData[dateKey]) {
+                alert('No se encontraron ventas para este día.');
+                return;
+            }
             
+            // Buscar y eliminar la venta
+            const originalLength = salesData[dateKey].length;
+            salesData[dateKey] = salesData[dateKey].filter(sale => sale.id != saleId); // Usar != en lugar de !==
+            
+            // Verificar si se eliminó algo
+            if (salesData[dateKey].length === originalLength) {
+                alert('No se pudo encontrar la venta a eliminar.');
+                return;
+            }
+            
+            // Si no quedan ventas, eliminar el día completo
             if (salesData[dateKey].length === 0) {
                 delete salesData[dateKey];
             }
             
-            saveData();
+            saveToStorage();
             loadDaySales();
             generateCalendar();
+            
+            console.log('Venta eliminada exitosamente');
         }
         
         // Actualizar totales
@@ -1186,7 +1322,7 @@
             // Generar reporte HTML
             const topProducts = Object.entries(monthlyData.productSummary)
                 .sort((a, b) => b[1].total - a[1].total)
-                .slice(0, 4);
+                .slice(0, 5);
             
             const reportHTML = `
                 <h2>📊 Resumen de ${monthName} ${year}</h2>
@@ -1265,8 +1401,13 @@
                     });
                 }
             });
+            
+            // Auto-focus en el campo de producto al cargar
+            document.getElementById('productName').focus();
         });
         
+        // Inicializar cuando carga la página
+        init();
     </script>
 </body>
 </html>
