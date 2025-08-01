@@ -56,22 +56,29 @@
             background: #f8f9fa;
             padding: 30px 40px;
             border-bottom: 3px solid #dee2e6;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .nav-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
         
         .nav-btn {
             background: #8B4513;
             color: white;
             border: none;
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            font-size: 32px;
+            font-size: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 80px;
             box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
         }
         
@@ -80,10 +87,17 @@
             transform: scale(1.1);
         }
         
+        .nav-btn.large {
+            width: 80px;
+            height: 80px;
+            font-size: 32px;
+        }
+        
         .date-display {
             text-align: center;
             flex: 1;
             margin: 0 30px;
+            min-width: 250px;
         }
         
         .date-display h2 {
@@ -96,6 +110,143 @@
         .date-display p {
             color: #666;
             font-size: 1.6em;
+        }
+        
+        .day-status {
+            margin-top: 10px;
+        }
+        
+        .status-badge {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .status-open {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-closed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .calendar-btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .calendar-btn:hover {
+            background: #34495e;
+        }
+        
+        /* Calendar Styles */
+        .calendar-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 40px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-month {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #8B4513;
+        }
+        
+        .calendar-nav {
+            background: #8B4513;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .calendar-nav:hover {
+            background: #A0522D;
+            transform: scale(1.1);
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-day-header {
+            text-align: center;
+            font-weight: bold;
+            color: #666;
+            padding: 10px 5px;
+            font-size: 0.9em;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            position: relative;
+        }
+        
+        .calendar-day:hover {
+            background: #e9ecef;
+        }
+        
+        .calendar-day.other-month {
+            color: #ccc;
+        }
+        
+        .calendar-day.selected {
+            background: #8B4513;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .calendar-day.has-sales {
+            background: #d4edda;
+            border: 2px solid #28a745;
+        }
+        
+        .calendar-day.has-sales.selected {
+            background: #8B4513;
+            border: 2px solid #28a745;
+        }
+        
+        .calendar-day.closed {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+        }
+        
+        .calendar-day.closed.selected {
+            background: #8B4513;
+            border: 2px solid #dc3545;
         }
         
         .main-content {
@@ -112,6 +263,11 @@
             border-radius: 20px;
             margin-bottom: 40px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .add-sale-form.disabled {
+            opacity: 0.6;
+            pointer-events: none;
         }
         
         .add-sale-form h3 {
@@ -226,6 +382,12 @@
             transform: scale(1.1);
         }
         
+        .delete-sale:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
         .total-section {
             background: linear-gradient(45deg, #8B4513, #A0522D);
             color: white;
@@ -264,6 +426,26 @@
             font-size: 1.2em;
         }
         
+        .day-ended-state {
+            text-align: center;
+            padding: 80px 30px;
+            color: #666;
+            background: #f8d7da;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .day-ended-state h3 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #721c24;
+        }
+        
+        .day-ended-state p {
+            font-size: 1.2em;
+            color: #721c24;
+        }
+        
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -286,6 +468,110 @@
         .stat-card p {
             opacity: 0.9;
             font-size: 1.1em;
+        }
+        
+        .currency {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .day-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-close-day {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-close-day:hover {
+            background: #c0392b;
+        }
+        
+        .btn-close-day:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .btn-reopen-day {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-reopen-day:hover {
+            background: #229954;
+        }
+        
+        .btn-monthly-report {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-monthly-report:hover {
+            background: #2980b9;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+        }
+        
+        .close:hover {
+            color: #000;
         }
         
         @media (max-width: 768px) {
@@ -325,12 +611,29 @@
             
             .date-navigation {
                 padding: 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-controls {
+                order: 2;
+            }
+            
+            .date-display {
+                order: 1;
+                margin: 0;
             }
             
             .nav-btn {
-                width: 70px;
-                height: 70px;
-                font-size: 28px;
+                width: 50px;
+                height: 50px;
+                font-size: 18px;
+            }
+            
+            .nav-btn.large {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
             }
             
             .date-display h2 {
@@ -349,11 +652,24 @@
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-        }
-        
-        .currency {
-            color: #2ecc71;
-            font-weight: bold;
+            
+            .day-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .calendar-container {
+                margin: 20px;
+                padding: 20px;
+            }
+            
+            .calendar-grid {
+                gap: 3px;
+            }
+            
+            .calendar-day {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
@@ -365,18 +681,40 @@
         </div>
         
         <div class="date-navigation">
-            <button class="nav-btn" onclick="changeDay(-1)" title="Día anterior">‹</button>
+            <div class="nav-controls">
+                <button class="nav-btn large" onclick="changeDay(-1)" title="Día anterior">‹</button>
+            </div>
+            
             <div class="date-display">
                 <h2 id="dayName">Lunes</h2>
                 <p id="fullDate">1 de Enero de 2025</p>
+                <div class="day-status">
+                    <span id="dayStatus" class="status-badge status-open">Abierto</span>
+                </div>
             </div>
-            <button class="nav-btn" onclick="changeDay(1)" title="Día siguiente">›</button>
+            
+            <div class="nav-controls">
+                <button class="nav-btn large" onclick="changeDay(1)" title="Día siguiente">›</button>
+                <button class="calendar-btn" onclick="showMonthlyReport()">📊 Resumen</button>
+            </div>
+        </div>
+        
+        <!-- Calendar Container -->
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <button class="calendar-nav" onclick="changeCalendarMonth(-1)">‹</button>
+                <div class="calendar-month" id="calendarMonth">Enero 2025</div>
+                <button class="calendar-nav" onclick="changeCalendarMonth(1)">›</button>
+            </div>
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Calendar will be generated here -->
+            </div>
         </div>
         
         <div class="main-content">
             <div class="sales-section">
-                <div class="add-sale-form">
-                    <h3 style="margin-bottom: 20px; color: #8B4513;">➕ Agregar Venta</h3>
+                <div id="addSaleForm" class="add-sale-form">
+                    <h3>➕ Agregar Venta</h3>
                     <div class="form-row">
                         <div class="form-group">
                             <label>¿Qué se vendió?</label>
@@ -427,24 +765,67 @@
                         <p>Promedio</p>
                     </div>
                 </div>
+                
+                <div class="day-controls">
+                    <button id="closeDayBtn" class="btn-close-day" onclick="closeDay()">🔒 Cerrar Día</button>
+                    <button id="reopenDayBtn" class="btn-reopen-day" onclick="reopenDay()" style="display: none;">🔓 Reabrir Día</button>
+                    <button class="btn-monthly-report" onclick="showMonthlyReport()">📊 Reporte Mensual</button>
+                </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Monthly Report Modal -->
+    <div id="reportModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="reportContent"></div>
         </div>
     </div>
 
     <script>
         // Variables globales
         let currentDate = new Date();
-        let salesData = loadSalesData() || {};
+        let calendarDate = new Date();
+        let salesData = {};
+        let closedDays = {};
         
         // Nombres de días y meses en español
         const dayNames = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
                            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        const dayNamesShort = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+        
+        // Funciones para guardar y cargar datos
+        function saveData() {
+            try {
+                // Guardamos tanto las ventas como los días cerrados en variables globales
+                // (En este entorno, los datos se mantienen durante la sesión)
+                console.log('Datos guardados:', { salesData, closedDays });
+            } catch (error) {
+                console.error('Error al guardar datos:', error);
+            }
+        }
+        
+        function loadData() {
+            try {
+                // En este entorno, los datos se mantienen en las variables globales
+                // durante la sesión actual
+                console.log('Datos cargados:', { salesData, closedDays });
+            } catch (error) {
+                console.error('Error al cargar datos:', error);
+                salesData = {};
+                closedDays = {};
+            }
+        }
         
         // Inicializar la aplicación
         function init() {
+            loadData();
             updateDateDisplay();
             loadDaySales();
+            updateDayStatus();
+            generateCalendar();
         }
         
         // Actualizar la visualización de la fecha
@@ -466,6 +847,84 @@
             
             updateDateDisplay();
             loadDaySales();
+            updateDayStatus();
+            generateCalendar();
+        }
+        
+        // Seleccionar día desde el calendario
+        function selectDay(day, month, year) {
+            currentDate = new Date(year, month, day);
+            updateDateDisplay();
+            loadDaySales();
+            updateDayStatus();
+            generateCalendar();
+        }
+        
+        // Cambiar mes del calendario
+        function changeCalendarMonth(direction) {
+            calendarDate.setMonth(calendarDate.getMonth() + direction);
+            generateCalendar();
+        }
+        
+        // Generar calendario
+        function generateCalendar() {
+            const year = calendarDate.getFullYear();
+            const month = calendarDate.getMonth();
+            
+            // Actualizar título del mes
+            document.getElementById('calendarMonth').textContent = `${monthNames[month]} ${year}`;
+            
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startDate = new Date(firstDay);
+            startDate.setDate(startDate.getDate() - firstDay.getDay());
+            
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+            
+            // Headers de días
+            dayNamesShort.forEach(day => {
+                const header = document.createElement('div');
+                header.className = 'calendar-day-header';
+                header.textContent = day;
+                calendarGrid.appendChild(header);
+            });
+            
+            // Generar días
+            const currentDateKey = getCurrentDateKey();
+            for (let i = 0; i < 42; i++) {
+                const date = new Date(startDate);
+                date.setDate(startDate.getDate() + i);
+                
+                const day = document.createElement('div');
+                day.className = 'calendar-day';
+                day.textContent = date.getDate();
+                
+                const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+                
+                // Marcar si es de otro mes
+                if (date.getMonth() !== month) {
+                    day.classList.add('other-month');
+                }
+                
+                // Marcar día seleccionado
+                if (dateKey === currentDateKey) {
+                    day.classList.add('selected');
+                }
+                
+                // Marcar días con ventas
+                if (salesData[dateKey] && salesData[dateKey].length > 0) {
+                    day.classList.add('has-sales');
+                }
+                
+                // Marcar días cerrados
+                if (isDayClosed(dateKey)) {
+                    day.classList.add('closed');
+                }
+                
+                day.onclick = () => selectDay(date.getDate(), date.getMonth(), date.getFullYear());
+                calendarGrid.appendChild(day);
+            }
         }
         
         // Obtener clave del día actual
@@ -473,8 +932,76 @@
             return `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
         }
         
+        // Verificar si el día está cerrado
+        function isDayClosed(dateKey = null) {
+            const key = dateKey || getCurrentDateKey();
+            return closedDays[key] === true;
+        }
+        
+        // Actualizar estado del día
+        function updateDayStatus() {
+            const dateKey = getCurrentDateKey();
+            const isClosed = isDayClosed(dateKey);
+            const statusElement = document.getElementById('dayStatus');
+            const closeDayBtn = document.getElementById('closeDayBtn');
+            const reopenDayBtn = document.getElementById('reopenDayBtn');
+            const addSaleForm = document.getElementById('addSaleForm');
+            
+            if (isClosed) {
+                statusElement.textContent = 'Cerrado';
+                statusElement.className = 'status-badge status-closed';
+                closeDayBtn.style.display = 'none';
+                reopenDayBtn.style.display = 'inline-block';
+                addSaleForm.classList.add('disabled');
+            } else {
+                statusElement.textContent = 'Abierto';
+                statusElement.className = 'status-badge status-open';
+                closeDayBtn.style.display = 'inline-block';
+                reopenDayBtn.style.display = 'none';
+                addSaleForm.classList.remove('disabled');
+            }
+        }
+        
+        // Cerrar día
+        function closeDay() {
+            const dateKey = getCurrentDateKey();
+            const daySales = salesData[dateKey] || [];
+            
+            if (daySales.length === 0) {
+                if (!confirm('No hay ventas registradas para este día. ¿Deseas cerrarlo de todas formas?')) {
+                    return;
+                }
+            }
+            
+            if (confirm('¿Estás seguro de cerrar este día? No podrás agregar más ventas.')) {
+                closedDays[dateKey] = true;
+                saveData();
+                updateDayStatus();
+                loadDaySales();
+                generateCalendar();
+            }
+        }
+        
+        // Reabrir día
+        function reopenDay() {
+            if (confirm('¿Deseas reabrir este día para poder agregar más ventas?')) {
+                const dateKey = getCurrentDateKey();
+                delete closedDays[dateKey];
+                saveData();
+                updateDayStatus();
+                loadDaySales();
+                generateCalendar();
+            }
+        }
+        
         // Agregar venta
         function addSale() {
+            const dateKey = getCurrentDateKey();
+            if (isDayClosed(dateKey)) {
+                alert('Este día está cerrado. No se pueden agregar más ventas.');
+                return;
+            }
+            
             const productName = document.getElementById('productName').value.trim();
             const quantity = parseInt(document.getElementById('quantity').value) || 1;
             const price = parseFloat(document.getElementById('price').value) || 0;
@@ -489,7 +1016,6 @@
                 return;
             }
             
-            const dateKey = getCurrentDateKey();
             const sale = {
                 id: Date.now(),
                 product: productName,
@@ -504,7 +1030,7 @@
             }
             
             salesData[dateKey].push(sale);
-            saveSalesData();
+            saveData();
             
             // Limpiar formulario
             document.getElementById('productName').value = '';
@@ -512,6 +1038,7 @@
             document.getElementById('price').value = '';
             
             loadDaySales();
+            generateCalendar();
         }
         
         // Cargar ventas del día
@@ -519,23 +1046,44 @@
             const dateKey = getCurrentDateKey();
             const daySales = salesData[dateKey] || [];
             const container = document.getElementById('salesContainer');
+            const isClosed = isDayClosed(dateKey);
             
             if (daySales.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <h3>No hay ventas registradas</h3>
-                        <p>Agrega la primera venta del día usando el formulario de arriba</p>
-                    </div>
-                `;
+                if (isClosed) {
+                    container.innerHTML = `
+                        <div class="day-ended-state">
+                            <h3>🔒 El día se ha terminado</h3>
+                            <p>Este día fue cerrado sin ventas registradas</p>
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <h3>No hay ventas registradas</h3>
+                            <p>Agrega la primera venta del día usando el formulario de arriba</p>
+                        </div>
+                    `;
+                }
             } else {
-                container.innerHTML = daySales.map(sale => `
+                let salesHTML = daySales.map(sale => `
                     <div class="sale-item">
                         <span><strong>${sale.product}</strong><br><small>${sale.timestamp}</small></span>
                         <span>${sale.quantity}</span>
-                        <span class="currency">$${sale.total.toFixed(2)}</span>
-                        <button class="delete-sale" onclick="deleteSale(${sale.id})" title="Eliminar venta">×</button>
+                        <span class="currency">${sale.total.toFixed(2)}</span>
+                        <button class="delete-sale" onclick="deleteSale(${sale.id})" title="Eliminar venta" ${isClosed ? 'disabled' : ''}>×</button>
                     </div>
                 `).join('');
+                
+                if (isClosed) {
+                    salesHTML += `
+                        <div class="day-ended-state">
+                            <h3>🔒 El día se ha terminado</h3>
+                            <p>Las ventas han sido cerradas para este día</p>
+                        </div>
+                    `;
+                }
+                
+                container.innerHTML = salesHTML;
             }
             
             updateTotals(daySales);
@@ -543,19 +1091,25 @@
         
         // Eliminar venta
         function deleteSale(saleId) {
+            const dateKey = getCurrentDateKey();
+            if (isDayClosed(dateKey)) {
+                alert('Este día está cerrado. No se pueden eliminar ventas.');
+                return;
+            }
+            
             if (!confirm('¿Estás seguro de eliminar esta venta?')) {
                 return;
             }
             
-            const dateKey = getCurrentDateKey();
             salesData[dateKey] = salesData[dateKey].filter(sale => sale.id !== saleId);
             
             if (salesData[dateKey].length === 0) {
                 delete salesData[dateKey];
             }
             
-            saveSalesData();
+            saveData();
             loadDaySales();
+            generateCalendar();
         }
         
         // Actualizar totales
@@ -571,33 +1125,130 @@
             document.getElementById('avgSale').textContent = avgSale.toFixed(2);
         }
         
-        // Guardar datos
-        function saveSalesData() {
-            try {
-                localStorage.setItem('coffee_king_sales', JSON.stringify(salesData));
-            } catch(e) {
-                document.cookie = `coffee_king_sales=${encodeURIComponent(JSON.stringify(salesData))};expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/`;
+        // Mostrar resumen mensual
+        function showMonthlyReport() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            const monthName = monthNames[month];
+            
+            // Obtener todos los días del mes
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            let monthlyData = {
+                totalSales: 0,
+                totalAmount: 0,
+                totalItems: 0,
+                activeDays: 0,
+                closedDays: 0,
+                bestDay: { date: '', amount: 0 },
+                worstDay: { date: '', amount: Infinity },
+                productSummary: {}
+            };
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const daySales = salesData[dateKey] || [];
+                const dayAmount = daySales.reduce((sum, sale) => sum + sale.total, 0);
+                const dayItems = daySales.reduce((sum, sale) => sum + sale.quantity, 0);
+                
+                if (daySales.length > 0) {
+                    monthlyData.activeDays++;
+                    monthlyData.totalSales += daySales.length;
+                    monthlyData.totalAmount += dayAmount;
+                    monthlyData.totalItems += dayItems;
+                    
+                    // Mejor y peor día
+                    if (dayAmount > monthlyData.bestDay.amount) {
+                        monthlyData.bestDay = { date: `${day} de ${monthName}`, amount: dayAmount };
+                    }
+                    if (dayAmount < monthlyData.worstDay.amount && dayAmount > 0) {
+                        monthlyData.worstDay = { date: `${day} de ${monthName}`, amount: dayAmount };
+                    }
+                    
+                    // Resumen de productos
+                    daySales.forEach(sale => {
+                        if (!monthlyData.productSummary[sale.product]) {
+                            monthlyData.productSummary[sale.product] = { quantity: 0, total: 0 };
+                        }
+                        monthlyData.productSummary[sale.product].quantity += sale.quantity;
+                        monthlyData.productSummary[sale.product].total += sale.total;
+                    });
+                }
+                
+                if (isDayClosed(dateKey)) {
+                    monthlyData.closedDays++;
+                }
             }
+            
+            if (monthlyData.worstDay.amount === Infinity) {
+                monthlyData.worstDay = { date: 'N/A', amount: 0 };
+            }
+            
+            // Generar reporte HTML
+            const topProducts = Object.entries(monthlyData.productSummary)
+                .sort((a, b) => b[1].total - a[1].total)
+                .slice(0, 4);
+            
+            const reportHTML = `
+                <h2>📊 Resumen de ${monthName} ${year}</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0;">
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; text-align: center; border: 2px solid #dee2e6;">
+                        <h4 style="font-size: 1.8em; color: #8B4513; margin-bottom: 5px;">${monthlyData.totalAmount.toFixed(2)}</h4>
+                        <p style="color: #666; font-size: 1.1em;">Total Vendido</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; text-align: center; border: 2px solid #dee2e6;">
+                        <h4 style="font-size: 1.8em; color: #8B4513; margin-bottom: 5px;">${monthlyData.totalSales}</h4>
+                        <p style="color: #666; font-size: 1.1em;">Total Ventas</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; text-align: center; border: 2px solid #dee2e6;">
+                        <h4 style="font-size: 1.8em; color: #8B4513; margin-bottom: 5px;">${monthlyData.activeDays}</h4>
+                        <p style="color: #666; font-size: 1.1em;">Días con Ventas</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; text-align: center; border: 2px solid #dee2e6;">
+                        <h4 style="font-size: 1.8em; color: #8B4513; margin-bottom: 5px;">${monthlyData.activeDays > 0 ? (monthlyData.totalAmount / monthlyData.activeDays).toFixed(2) : '0.00'}</h4>
+                        <p style="color: #666; font-size: 1.1em;">Promedio Diario</p>
+                    </div>
+                </div>
+                
+                <h3 style="color: #8B4513; margin: 30px 0 15px 0; font-size: 1.5em;">🏆 Mejores y Peores Días</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; text-align: center; border: 2px solid #dee2e6;">
+                        <h4 style="font-size: 1.8em; color: #8B4513; margin-bottom: 5px;">${monthlyData.bestDay.amount.toFixed(2)}</h4>
+                        <p style="color: #666; font-size: 1.1em;">Mejor Día<br><small>${monthlyData.bestDay.date}</small></p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; text-align: center; border: 2px solid #dee2e6;">
+                        <h4 style="font-size: 1.8em; color: #8B4513; margin-bottom: 5px;">${monthlyData.worstDay.amount.toFixed(2)}</h4>
+                        <p style="color: #666; font-size: 1.1em;">Día Más Bajo<br><small>${monthlyData.worstDay.date}</small></p>
+                    </div>
+                </div>
+                
+                ${topProducts.length > 0 ? `
+                <h3 style="color: #8B4513; margin: 30px 0 15px 0; font-size: 1.5em;">☕ Productos Más Vendidos</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                    ${topProducts.map(([product, data]) => `
+                        <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; text-align: center; border: 2px solid #dee2e6;">
+                            <h4 style="font-size: 1.8em; color: #8B4513; margin-bottom: 5px;">${data.quantity}</h4>
+                            <p style="color: #666; font-size: 1.1em;">${product}<br><small>${data.total.toFixed(2)}</small></p>
+                        </div>
+                    `).join('')}
+                </div>
+                ` : ''}
+            `;
+            
+            document.getElementById('reportContent').innerHTML = reportHTML;
+            document.getElementById('reportModal').style.display = 'block';
         }
         
-        // Cargar datos
-        function loadSalesData() {
-            try {
-                const saved = localStorage.getItem('coffee_king_sales');
-                return saved ? JSON.parse(saved) : null;
-            } catch(e) {
-                const cookies = document.cookie.split(';');
-                for(let cookie of cookies) {
-                    const [name, value] = cookie.trim().split('=');
-                    if(name === 'coffee_king_sales') {
-                        try {
-                            return JSON.parse(decodeURIComponent(value));
-                        } catch(e) {
-                            return null;
-                        }
-                    }
-                }
-                return null;
+        // Cerrar modal
+        function closeModal() {
+            document.getElementById('reportModal').style.display = 'none';
+        }
+        
+        // Cerrar modal al hacer clic fuera
+        window.onclick = function(event) {
+            const reportModal = document.getElementById('reportModal');
+            if (event.target === reportModal) {
+                reportModal.style.display = 'none';
             }
         }
         
@@ -605,16 +1256,17 @@
         document.addEventListener('DOMContentLoaded', function() {
             const inputs = ['productName', 'quantity', 'price'];
             inputs.forEach(id => {
-                document.getElementById(id).addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        addSale();
-                    }
-                });
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            addSale();
+                        }
+                    });
+                }
             });
         });
         
-        // Inicializar cuando carga la página
-        init();
     </script>
 </body>
 </html>
